@@ -17,7 +17,8 @@ async function run() {
       uppercaseBody: (core.getInput('uppercase-body').toLowerCase() === 'true'),
     }
 
-    const branchName = github.context.payload.pull_request.head.ref;
+    const branchRef = github.context.payload.pull_request.head.ref;
+    const branchName = branchRef.substring(8, branchRef.length);
     const branch = inputs.lowercaseBranch ? branchName.toLowerCase() : branchName;
     core.debug(`branch: ${branch}`);
 
