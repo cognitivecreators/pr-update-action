@@ -19,7 +19,7 @@ async function run() {
 
     const branchRef = github.context.payload.pull_request.head.ref;
     const branchName = branchRef.substring(8, branchRef.length);
-    const branch = inputs.lowercaseBranch ? branchName.toLowerCase() : branchName;
+    const branch = inputs.lowercaseBranch ? branchRef.toLowerCase() : branchRef;
     core.debug(`branch: ${branch}`);
 
     const matches = branch.match(new RegExp(inputs.branchRegex));
@@ -28,7 +28,7 @@ async function run() {
       return;
     }
 
-    const match = (upperCase) => upperCase ? matches[0].toUpperCase() : matches[0];
+    const match = (upperCase) => upperCase ? branchName.toUpperCase() : branchName;
     core.info(`Matched branch text: ${match(false)}`);
 
     const request = {
